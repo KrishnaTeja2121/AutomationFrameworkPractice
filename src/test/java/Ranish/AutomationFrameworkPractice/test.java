@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import Ranish.AutomationFrameworkPractice.pageobjects.LandingPage;
+import Ranish.AutomationFrameworkPractice.pageobjects.ProductCatalog;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class test {
@@ -22,29 +24,20 @@ public class test {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		String productName="ZARA COAT 3";
 		
-		driver.get("https://rahulshettyacademy.com/client");
-		driver.findElement(By.id("userEmail")).sendKeys("test21@test.com");		
-		driver.findElement(By.id("userPassword")).sendKeys("Test1234");		
-		driver.findElement(By.id("login")).click();
-		WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
-		
-		List<WebElement> products=driver.findElements(By.cssSelector(".mb-3"));
-		WebElement prod=products.stream().filter(
-				product->product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst().orElse(null);
-		
-		prod.findElement(By.cssSelector(".card-body button:last-of-type")).click();
+		LandingPage landpage=new LandingPage(driver);
+		landpage.goTo();
+		landpage.loginApplication("test21@test.com", "Test1234");
 		
 		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container")));
-		wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector(".ng-animating"))));
-		//wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ng-animating")));
+		ProductCatalog productCatalog=new ProductCatalog(driver);
+		List<WebElement> products=productCatalog.getProductsList();
+		productCatalog.addProductToCart(productName);
+
 		driver.findElement(By.cssSelector("[routerlink*='cart']")).click();
 		
 		List<WebElement> cartProducts=driver.findElements(By.cssSelector(".cartSection h3"));
 		Boolean match=cartProducts.stream().anyMatch(cartProduct->cartProduct.getText().equalsIgnoreCase(productName));
-		Assert.assertTrue(match);
-		
+		Assert.assertTrue(match);	
 		driver.findElement(By.cssSelector(".totalRow button")).click();
 		
 
