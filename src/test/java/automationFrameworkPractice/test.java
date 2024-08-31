@@ -1,4 +1,4 @@
-package Ranish.AutomationFrameworkPractice;
+package automationFrameworkPractice;
 
 import java.time.Duration;
 import java.util.List;
