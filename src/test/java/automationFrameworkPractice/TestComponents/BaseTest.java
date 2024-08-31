@@ -8,6 +8,8 @@ import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
 
 import AutomationFrameworkPractice.pageobjects.LandingPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -40,11 +42,17 @@ public class BaseTest {
 		
 	}
 	
+	@BeforeMethod
 	public LandingPage launchApp() throws IOException {
 		driver=initializeDriver();
 		LandingPage landpage=new LandingPage(driver);
 		landpage.goTo();
 		return landpage;
+	}
+	
+	@AfterSuite
+	public void finalClose() {
+		driver.close();
 	}
 	
 

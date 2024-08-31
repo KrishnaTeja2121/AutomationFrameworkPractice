@@ -48,8 +48,7 @@ public class test extends BaseTest{
 		checkout.selectCountry("india");
 		checkout.submitOrder();
 		String confirmMessage=checkout.getConfimrationMessage();
-		Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
-		driver.close();		
+		Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));	
 
 	}
 
