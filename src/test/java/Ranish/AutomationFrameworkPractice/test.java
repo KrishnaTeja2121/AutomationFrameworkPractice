@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import Ranish.AutomationFrameworkPractice.pageobjects.CartPage;
+import Ranish.AutomationFrameworkPractice.pageobjects.CheckoutPage;
 import Ranish.AutomationFrameworkPractice.pageobjects.LandingPage;
 import Ranish.AutomationFrameworkPractice.pageobjects.ProductCatalog;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -32,14 +34,19 @@ public class test {
 		ProductCatalog productCatalog=new ProductCatalog(driver);
 		List<WebElement> products=productCatalog.getProductsList();
 		productCatalog.addProductToCart(productName);
+		productCatalog.goToCartPage();
+		
+		CartPage cart=new CartPage(driver);
+		Boolean match=cart.VerifyproductDisplay(productName);
 
-		driver.findElement(By.cssSelector("[routerlink*='cart']")).click();
-		
-		List<WebElement> cartProducts=driver.findElements(By.cssSelector(".cartSection h3"));
-		Boolean match=cartProducts.stream().anyMatch(cartProduct->cartProduct.getText().equalsIgnoreCase(productName));
 		Assert.assertTrue(match);	
-		driver.findElement(By.cssSelector(".totalRow button")).click();
-		
+		cart.gotoCheckout();
+		CheckoutPage checkout=new CheckoutPage(driver);
+		checkout.selectCountry("india");
+		checkout.submitOrder();
+		String confirmMessage=checkout.getConfimrationMessage();
+		Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
+		driver.close();		
 
 	}
 
