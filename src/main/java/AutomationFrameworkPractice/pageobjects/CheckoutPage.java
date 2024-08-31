@@ -1,4 +1,4 @@
-package Ranish.AutomationFrameworkPractice.pageobjects;
+package AutomationFrameworkPractice.pageobjects;
 
 import java.util.List;
 

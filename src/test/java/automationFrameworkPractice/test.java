@@ -1,5 +1,6 @@
 package automationFrameworkPractice;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 
@@ -10,24 +11,26 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
-import Ranish.AutomationFrameworkPractice.pageobjects.CartPage;
-import Ranish.AutomationFrameworkPractice.pageobjects.CheckoutPage;
-import Ranish.AutomationFrameworkPractice.pageobjects.LandingPage;
-import Ranish.AutomationFrameworkPractice.pageobjects.ProductCatalog;
+import AutomationFrameworkPractice.pageobjects.CartPage;
+import AutomationFrameworkPractice.pageobjects.CheckoutPage;
+import AutomationFrameworkPractice.pageobjects.LandingPage;
+import AutomationFrameworkPractice.pageobjects.ProductCatalog;
+import automationFrameworkPractice.TestComponents.BaseTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class test {
+public class test extends BaseTest{
+	
+	
+	@Test
+	public void submitOrder() throws IOException{		
 
-	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		WebDriverManager.chromedriver().setup();
-		WebDriver driver=new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		String productName="ZARA COAT 3";
+		LandingPage landpage=launchApp();
+
 		
-		LandingPage landpage=new LandingPage(driver);
-		landpage.goTo();
 		landpage.loginApplication("test21@test.com", "Test1234");
 		
 		
